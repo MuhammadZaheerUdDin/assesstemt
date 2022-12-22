@@ -36,7 +36,7 @@ class MerchantController extends Controller
     public function order()
     {
         // TODO: Complete this method
-        $order=new order();
+        $order=Order::all();
         return $order;
     }
 //    public function orderStats(Request $request): JsonResponse
