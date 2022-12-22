@@ -18,8 +18,10 @@ return new class extends Migration
             $table->foreignId('user_id');
             $table->foreignId('merchant_id');
             // TODO: Replace me with a brief explanation of why floats aren't the correct data type, and replace with the correct data type.
-            //Replaced float it with a double because it doesn't change the value and will allow ro enter the prefix with this limit
-            $table->double('commission_rate',5,3);
+            //Replaced float it with a decimal because it doesn't change the value and will allow ro enter the prefix with this limit
+            $table->decimal('subtotal',8,3);
+            $table->decimal('commission_rate',8,2)->default(0.00);
+        //            $table->double('commission_rate',5,3);
 //            $table->float('commission_rate');
             $table->string('discount_code');
             $table->timestamps();
