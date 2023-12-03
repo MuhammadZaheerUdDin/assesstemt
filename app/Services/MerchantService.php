@@ -7,6 +7,7 @@ use App\Models\Affiliate;
 use App\Models\Merchant;
 use App\Models\Order;
 use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 
 class MerchantService
 {
@@ -43,9 +44,17 @@ class MerchantService
      * @param array{domain: string, name: string, email: string, api_key: string} $data
      * @return void
      */
-    public function updateMerchant(User $user, array $data)
+    public function updateMerchant(User $user, array $data): void
     {
-        // TODO: Complete this method
+        $user->update([
+            'email' => $data['email'],
+            'password' => Hash::make($data['api_key']),
+        ]);
+
+        $user->merchant->update([
+            'domain' => $data['domain'],
+            'display_name' => $data['name'],
+        ]);
     }
 
     /**
@@ -57,7 +66,11 @@ class MerchantService
      */
     public function findMerchantByEmail(string $email): ?Merchant
     {
-        // TODO: Complete this method
+        $user = User::where('email', $email)->first();
+        if($user) {
+            return $user;
+        }
+        return $user->merchant = null;
     }
 
     /**
@@ -69,6 +82,10 @@ class MerchantService
      */
     public function payout(Affiliate $affiliate)
     {
-        // TODO: Complete this method
+        $unpaidOrders = $affiliate->orders()->where('payout_status', Order::STATUS_UNPAID)->get();
+
+        foreach ($unpaidOrders as $order) {
+            PayoutOrderJob::dispatch($order);
+        }
     }
 }
