@@ -27,7 +27,14 @@ class MerchantService
             'type' => User::TYPE_MERCHANT,
         ]);
 
-        return $user;
+
+        $merchant = Merchant::create([
+            'domain' => $data['domain'],
+            'display_name' => $data['name'],
+            'user_id' =>  $user->id,
+        ]);
+
+        return $merchant;
     }
 
     /**
