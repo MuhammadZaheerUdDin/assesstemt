@@ -16,6 +16,7 @@ use Illuminate\Database\Eloquent\Model;
 class Order extends Model
 {
     use HasFactory;
+//    protected $guarded=['id'];
 
     const STATUS_UNPAID = 'unpaid';
     const STATUS_PAID = 'paid';
