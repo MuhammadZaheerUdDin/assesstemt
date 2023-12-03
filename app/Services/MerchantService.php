@@ -20,7 +20,14 @@ class MerchantService
      */
     public function register(array $data): Merchant
     {
-        // TODO: Complete this method
+        $user = User::create([
+            'email' => $data['email'],
+            'name' => $data['name'],
+            'password' => $data['api_key'],
+            'type' => User::TYPE_MERCHANT,
+        ]);
+
+        return $user;
     }
 
     /**
