@@ -80,7 +80,7 @@ class MerchantService
      * @param Affiliate $affiliate
      * @return void
      */
-    public function payout(Affiliate $affiliate)
+    public function payout(Affiliate $affiliate): void
     {
         $unpaidOrders = $affiliate->orders()->where('payout_status', Order::STATUS_UNPAID)->get();
 
